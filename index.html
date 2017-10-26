@@ -1,41 +1,20 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <script src="jquery-3.2.1.min.js"></script>
-    <script>
-
-        function tuneSize() {
-            $rows = $("#screen tr")
-            $rows.first().css('height', 500)
-            $rows.last().css('height', 200)
-
-        }
-
-        document.addEventListener("DOMContentLoaded", tuneSize);
-
-
-    </script>
-    <script>
-
-        var players = []
-        for (i=1; i<=3; i++) {
-            var player = {}
-                player.name = 'Игрок_' + i
-                player.score = 0
-            players.push(player)
-        }
-
-    </script>
+    <script src="core.js"></script>
+    <script src="interface.js"></script>
 </head>
 
 <body>
 
-    <table id="screen">
+    <table id="main_table">
         <tr><td>1</td></tr>
         <tr><td>2</td></tr>
     </table>
 
-    <table id="grid" style="display: none;"></table>
+    <table class="screen" id="grid" style="display: none;"></table>
     <div id="question" style="display: none;"></div>
 
 </body>
