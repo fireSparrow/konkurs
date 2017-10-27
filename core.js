@@ -24,6 +24,14 @@ var app = app || {}
         app.redrawInterface()
     }
 
+    app.startRound = function() {
+        app.changeScreen('title')
+    }
+
+    app.selectQuestion = function(question) {
+        app.changeScreen('question', params=question)
+    }
+
     app.answerWrong = function(player, question) {
         player.score -= question.cost
     }
@@ -41,6 +49,7 @@ var app = app || {}
 
     app.finishRound = function() {
         app.round += 1
-        app.changeScreen('title')
+        app.startRound()
     }
+
 }
