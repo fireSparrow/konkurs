@@ -5,9 +5,10 @@ app = app || {}
 {
     class Question {
 
-        constructor(cost, body) {
+        constructor(cost, body, answer) {
             this.cost = cost
             this.body = body
+            this.answer = answer
             this.answered = false
         }
     }
@@ -28,12 +29,15 @@ app = app || {}
                 let [key, value] = pair
                 if (key=='round') {round = value; continue}
                 if (key=='topic') {topic = value; continue}
-                if (isFinite(key)) {
+                if (['100', '200', '300', '400', '500'].indexOf(key) > -1) {
                     res[round] = res[round] || {}
                     res[round][topic] = res[round][topic] || []
-                    console.log(res[round][topic])
+
+                    let [body, answer, ...rest] = value.split('[')
+                        body = body.trim()
+                        answer = answer.replace(']', '').trim()
                     res[round][topic].push(
-                        new Question(cost=key, body=value)
+                        new Question(key, body, answer)
                     )
                 }
             }
@@ -42,4 +46,5 @@ app = app || {}
     }
 
     app.questions = parseQuestions(app.questions_raw)
+    console.log(app.questions)
 }

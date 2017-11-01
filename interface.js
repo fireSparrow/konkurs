@@ -13,7 +13,30 @@ document.addEventListener("DOMContentLoaded", tuneSize);
 
 app = app || {}
 
-app.changeScreen = function(name) {
-    $(".screen").hide()
-    $("#"+name).show()
+{
+
+    app.changeScreen = function(name, params) {
+        let $main_frame = $("#main_frame")
+        $main_frame.empty()
+        let $obj = $("#"+name).clone()
+        $obj.appendTo($main_frame)
+        app.activate(name, obj, params)
+    }
+
+    app.activate = function(name, params) {
+        switch(name) {
+            case 'grid': fillGrid($obj); break;
+        }
+
+    }
+
+    function fillGrid($obj) {
+        let round = app.round
+        let questions = app.questions
+        let topics = questions[round]
+        topics.forEach(function(topic, content){
+
+        })
+    }
+
 }
