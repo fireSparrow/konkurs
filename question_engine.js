@@ -25,7 +25,7 @@ app = app || {}
 
             for (t=0; t<tokens.length; t++) {
                 let token = tokens[t]
-                let pair = token.split(':').map(function(s){return s.trim()})
+                let pair = token.split('::').map(function(s){return s.trim()})
                 let [key, value] = pair
                 if (key=='round') {round = value; continue}
                 if (key=='topic') {topic = value; continue}
@@ -33,11 +33,11 @@ app = app || {}
                     res[round] = res[round] || {}
                     res[round][topic] = res[round][topic] || []
 
-                    let [body, answer, ...rest] = value.split('[')
+                    let [body, answer] = value.split('[')
                         body = body.trim()
                         answer = answer.replace(']', '').trim()
                     res[round][topic].push(
-                        new Question(key, body, answer)
+                        new Question(cost=(key*round), body, answer)
                     )
                 }
             }

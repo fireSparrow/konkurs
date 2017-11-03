@@ -13,14 +13,13 @@ var app = app || {}
         players.push(player)
     }
 
-    let stage = {}
+    let stage = {'screen': 'title', 'params': null}
     app.stage = stage
-    stage.current = {'screen': 'opening', 'params': null}
 
     app.round = 0
 
     app.changeScreen = function(screen, params=null) {
-        stage.current = {'screen': 'opening', 'params': params}
+        app.stage = {'screen': screen, 'params': params}
         app.redrawInterface()
     }
 
@@ -51,5 +50,6 @@ var app = app || {}
         app.round += 1
         app.startRound()
     }
-
 }
+
+app.audio = new Audio()
