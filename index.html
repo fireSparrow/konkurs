@@ -1,8 +1,8 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
-    <script src="jquery-3.2.1.min.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
     <script src="core.js"></script>
     <script src="questions.js"></script>
     <script src="question_engine.js"></script>
@@ -16,9 +16,20 @@
 
     <table id="main_table">
         <tr><td id="main_frame">1</td></tr>
-        <tr><td>2</td></tr>
+        <tr><td>
+            <table id="score_table" style="display: none;">
+                <tr id="score_panel"></tr>
+            </table>
+        </td></tr>
     </table>
 
+    <div id="names" class="screen">
+        Введите имена игроков:<br>
+        <input id="#player1" /><br>
+        <input id="#player2" /><br>
+        <input id="#player3" /><br>
+        <input type="button" onclick="app.saveNames()" value="Начать">
+    </div>
     <div id="title" class="screen"><img src="pic/opening.gif"></div>
     <table id="grid" class="screen"></table>
     <div id="question" class="screen"></div>

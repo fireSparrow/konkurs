@@ -5,11 +5,12 @@ app = app || {}
 {
     class Question {
 
-        constructor(cost, body, answer) {
+        constructor(cost, body, answer, is_image) {
             this.cost = cost
             this.body = body
             this.answer = answer
             this.answered = false
+            this.is_image = is_image
         }
     }
 
@@ -21,30 +22,27 @@ app = app || {}
         let rows = text.split('#')
 
         rows.forEach(function(row, i, arr){
-            let tokens = row.split('@')
 
-            for (t=0; t<tokens.length; t++) {
-                let token = tokens[t]
-                let pair = token.split('::').map(function(s){return s.trim()})
-                let [key, value] = pair
-                if (key=='round') {round = value; continue}
-                if (key=='topic') {topic = value; continue}
-                if (['100', '200', '300', '400', '500'].indexOf(key) > -1) {
-                    res[round] = res[round] || {}
-                    res[round][topic] = res[round][topic] || []
+            let pair = row.split('::').map(function(s){return s.trim()})
+            let [key, value] = pair
+            if (key=='round') {round = value}
+            if (key=='topic') {topic = value}
+            if (['100', '200', '300', '400', '500'].indexOf(key) > -1) {
+                res[round] = res[round] || {}
+                res[round][topic] = res[round][topic] || []
 
-                    let [body, answer] = value.split('[')
-                        body = body.trim()
-                        answer = answer.replace(']', '').trim()
-                    res[round][topic].push(
-                        new Question(cost=(key*round), body, answer)
-                    )
-                }
+                let is_image = (value.indexOf('@IMG') > -1)
+
+                let [body, answer] = value.split('[')
+                    body = body.trim()
+                    answer = answer.replace(']', '').trim()
+                res[round][topic].push(
+                    new Question(cost=(key*round), body, answer, is_image)
+                )
             }
         })
         return res
     }
 
-    app.questions = parseQuestions(app.questions_raw)
-    console.log(app.questions)
+    app.questions = app.storage.get('questions') || parseQuestions(app.questions_raw)
 }
