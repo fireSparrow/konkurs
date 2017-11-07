@@ -2,7 +2,7 @@
 app = app || {}
 
 app.const = app.const || {}
-app.const.pic_title = ['pic/opening.gif', 'pic/round1.gif', 'pic/round2.gif', 'pic/round3.gif']
+app.const.pic_title = ['pic/opening.png', 'pic/round1.png', 'pic/round2.png', 'pic/round3.png']
 app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
 
 {
@@ -41,6 +41,11 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
                 showQuestion(q=params)
                 break
             case 'title':
+                let img = obj.find('img')
+                img.attr("src", app.const.pic_title[app.round])
+                let [wh, ww] = [$(window).innerHeight(), $(window).innerWidth()]
+                img.css('max-width', ww-30)
+                img.css('max-height', wh-200)
                 app.audio.src=app.const.sound_title[app.round ? 1 : 0]
                 app.audio.play()
                 break
@@ -121,7 +126,6 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
         if (screen == 'title' && key == 'space') {
             let nxt = app.round ? 'grid' : 'title'
             app.round = app.round ? app.round : app.round+1
-            $('#title').find('img').attr("src", app.const.pic_title[app.round])
             app.changeScreen(nxt)
         }
         if (screen == 'question' && key=='t') {
