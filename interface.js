@@ -60,7 +60,8 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
         panel.empty()
         for (p in app.players){
             let player = app.players[p]
-            let cell = $('<td>', {text: player.name})
+            let cell = $('<td>')
+            cell.append($('<span>', {text: player.name}))
             if (screen == 'question') {
                 let minus = $('<input>', {type: 'button', value: '-'})
                 minus.bind('click', function(){app.answerWrong(player, question=app.stage.params); showScore()})
@@ -96,16 +97,22 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
 
     function showQuestion(q){
         let screen = $('#main_screen')
-        if (!q.is_image) {
-            screen.text(q.body)
-        } else {
-            let img = $('<img>', {src: 'img/'+q.body})
-            let [ww, wh] = [$(window).innerWidth(), $(window).innerHeight()]
-            img.css('max-width', ww-30)
-            img.css('max-height', wh-200)
-            screen.append(img)
+        switch (q.type) {
+            case 'text':
+                screen.text(q.body)
+                break
+            case 'audio':
+                app.audio.src = 'audio/'+q.body
+                app.audio.play()
+                break
+            case 'image':
+                let img = $('<img>', {src: 'img/'+q.body})
+                let [ww, wh] = [$(window).innerWidth(), $(window).innerHeight()]
+                img.css('max-width', ww-30)
+                img.css('max-height', wh-200)
+                screen.append(img)
+                break
         }
-
     }
 }
 
@@ -113,12 +120,15 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
     function onKeyPress(e) {
 
         map_code = (c) => { switch(c) {
+            case 83: case 115: case 1067: case 1099:
+                return 'S'; break;
+            case 82: case 114: case 1050: case 1082:
+                return 'r'; break;
             case 32:
                 return 'space'; break;
             case 84: case 116: case 1045: case 1077:
                 return 't'; break;
         }}
-
 
         let key = map_code(e.keyCode)
         console.log(e.keyCode)
@@ -127,9 +137,34 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
             let nxt = app.round ? 'grid' : 'title'
             app.round = app.round ? app.round : app.round+1
             app.changeScreen(nxt)
+            return
         }
         if (screen == 'question' && key=='t') {
             app.answerTimeout()
+            return
+        }
+        if (screen == 'question' && key=='r' && app.stage.params.type == 'audio') {
+            app.audio.currentTime = 0
+            app.audio.play()
+            return
+        }
+        if (screen == 'question' && key=='S' && app.stage.params.type == 'audio') {
+            if (app.audio.paused) {
+                app.audio.play()
+            } else if (app.audio.played) {
+                app.audio.pause()
+            }
+            return
+        }
+        if (screen == 'grid' && key == 'space') {
+            let questions = app.questions[app.round]
+            for (topic in questions) {
+                for (q in questions[topic]) {
+                    if (!questions[topic][q].answered) {return}
+                }
+            }
+            app.finishRound()
+            return
         }
     }
 

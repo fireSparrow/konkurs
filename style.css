@@ -1,0 +1,36 @@
+
+body{
+    background-color: 4060c0;
+    color: white;
+    font-family: Arial;
+}
+
+.screen {display: none;}
+
+main_table {
+    width: 100%
+}
+
+.white-grid {
+    border-collapse: collapse;
+    color: white;
+    min-height: 600;
+}
+
+.white-grid tr {
+}
+
+.white-grid td {
+    border: 2px solid white;
+    min-width: 35px;
+    padding: 20px;
+}
+
+#score_table td span {
+    padding: 0px 40px;
+}
+
+#score_table td input {
+    padding: 0px 20px;
+    height: 20px;
+}

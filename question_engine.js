@@ -5,12 +5,12 @@ app = app || {}
 {
     class Question {
 
-        constructor(cost, body, answer, is_image) {
+        constructor(cost, body, answer, type) {
             this.cost = cost
             this.body = body
             this.answer = answer
             this.answered = false
-            this.is_image = is_image
+            this.type = type
         }
     }
 
@@ -31,13 +31,15 @@ app = app || {}
                 res[round] = res[round] || {}
                 res[round][topic] = res[round][topic] || []
 
-                let is_image = (value.indexOf('@IMG') > -1)
+                let type = 'text'
+                type = (value.indexOf('@IMG') > -1) ? 'image' : type
+                type = (value.indexOf('@AUD') > -1) ? 'audio' : type
 
                 let [body, answer] = value.split('[')
                     body = body.trim()
                     answer = answer.replace(']', '').trim()
                 res[round][topic].push(
-                    new Question(cost=(key*round), body, answer, is_image)
+                    new Question(cost=(key*round), body, answer, type)
                 )
             }
         })

@@ -17,16 +17,6 @@ var app = app || {}
 
 {
     let players = app.storage.get('players')
-
-    if (~players || players.length != 3) {
-        players = []
-        for (i=1; i<=3; i++) {
-            let player = {}
-                player.name = 'Игрок_' + i
-                player.score = 0
-            players.push(player)
-        }
-    }
     app.players = players
 
     let stage = app.storage.get('stage') || {'screen': 'names', 'params': null}
