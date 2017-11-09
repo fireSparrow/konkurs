@@ -17,7 +17,7 @@ var app = app || {}
 
 {
     let players = app.storage.get('players')
-    app.players = players
+    app.players = players || []
 
     let stage = app.storage.get('stage') || {'screen': 'names', 'params': null}
     app.stage = stage
@@ -69,7 +69,9 @@ var app = app || {}
     app.saveNames = function() {
         let vals = $('#main_screen input')
         for (let i=0; i<3; i++) {
-            app.players[i].name = vals[i].value || app.players[i].name
+            app.players[i] = app.players[i] ? app.players[i] : {}
+            app.players[i].name = vals[i].value
+            app.players[i].score = 0
         }
         app.changeScreen('title')
     }
