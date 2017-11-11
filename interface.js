@@ -8,7 +8,7 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
 {
     tuneSize = function() {
         let wh = $(window).innerHeight()
-        const BAR_HEIGHT = 100
+        const BAR_HEIGHT = 150
         let rows = $("#main_table tr")
         rows.first().css('height', wh - BAR_HEIGHT - 30)
         rows.last().css('height', BAR_HEIGHT)
@@ -99,7 +99,9 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
         let screen = $('#main_screen')
         switch (q.type) {
             case 'text':
-                screen.text(q.body)
+                let div = $('<div>', {id: 'question_text'})
+                div.text(q.body)
+                screen.append(div)
                 break
             case 'audio':
                 app.audio.src = 'audio/'+q.body
@@ -131,7 +133,6 @@ app.const.sound_title = ['sound/title.mp3', 'sound/round.mp3']
         }}
 
         let key = map_code(e.keyCode)
-        console.log(e.keyCode)
         let screen = app.stage.screen
         if (screen == 'title' && key == 'space') {
             let nxt = app.round ? 'grid' : 'title'

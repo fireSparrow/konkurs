@@ -7,8 +7,8 @@ body{
 
 .screen {display: none;}
 
-main_table {
-    width: 100%
+#main_table {
+    width: 100%;
 }
 
 .white-grid {
@@ -26,11 +26,23 @@ main_table {
     padding: 20px;
 }
 
+#score_table {
+    width: 100%;
+}
+
 #score_table td span {
     padding: 0px 40px;
+    font-size: 18px;
 }
 
 #score_table td input {
     padding: 0px 20px;
-    height: 20px;
+    height: 30px;
+}
+
+#question_text {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20em;
+    font-size: 20px;
 }
